@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { AuthForm } from "~/components/auth-form";
+import { Icons } from "~/components/icons";
 import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
@@ -12,10 +13,13 @@ export default function SignInPage() {
           href="/"
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8",
+            "absolute left-4 top-4 md:left-8 md:top-8",
           )}
         >
-          Back
+          <>
+            <Icons.chevronLeft className="mr-2 h-4 w-4" />
+            Back
+          </>
         </Link>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

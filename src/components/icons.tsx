@@ -1,9 +1,15 @@
-import { Loader2, type LucideProps, type LucideIcon } from "lucide-react";
+import {
+  Loader2,
+  ChevronLeft,
+  type LucideProps,
+  type LucideIcon,
+} from "lucide-react";
 
 export type Icon = LucideIcon;
 
 export const Icons = {
   spinner: Loader2,
+  chevronLeft: ChevronLeft,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

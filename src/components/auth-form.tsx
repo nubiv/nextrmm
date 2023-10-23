@@ -11,7 +11,7 @@ import { Label } from "~/components/ui/label";
 import { AuthFormType } from "~/types/index.d";
 import { api } from "~/trpc/react";
 import { RouterInputs } from "~/trpc/shared";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   authFormType: AuthFormType;
@@ -20,8 +20,10 @@ interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 type RegisterInput = RouterInputs["credentialsRouter"]["register"];
 
 export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
+  const router = useRouter();
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const [signInError, setSignInError] = React.useState<string>("");
   const register = api.credentialsRouter.register.useMutation();
 
   async function onRegister(event: React.FormEvent<HTMLFormElement>) {
@@ -40,20 +42,41 @@ export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
 
     register.mutate(registerInput, {
       onSuccess() {
-        console.log("success>>>");
-        // ** redirect wouldn't work in this onSuccess callback **
-        // redirect("login");
+        router.replace("login");
       },
     });
   }
 
-  async function onSignIn(event: React.FormEvent<HTMLFormElement>) {}
+  async function onSignIn(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const registerInput: RegisterInput = {
+      email,
+      password,
+    };
+    setEmail("");
+    setPassword("");
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      ...registerInput,
+    });
+
+    if (res?.error) {
+      setSignInError(res?.error);
+    }
+
+    if (res?.ok) {
+      router.replace("/");
+      return;
+    }
+  }
 
   React.useEffect(() => {
-    if (register.isSuccess) {
-      redirect("login");
-    }
-  }, [register]);
+    setInterval(() => {
+      setSignInError("");
+    }, 6000);
+  }, [signInError]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -96,7 +119,7 @@ export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             {authFormType === AuthFormType.SignIn
-              ? "Sign In with Email"
+              ? "Sign In with Credentials"
               : "Sign Up"}
           </Button>
         </div>
@@ -140,6 +163,7 @@ export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
         </Button>
       </div>
       <p>{register.error?.data ? register.error.message : null}</p>
+      <p>{signInError ? signInError : null}</p>
     </div>
   );
 }

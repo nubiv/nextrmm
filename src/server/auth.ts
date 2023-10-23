@@ -10,6 +10,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
+import { isPasswordValid } from "~/lib/hash";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -47,6 +48,10 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
+  pages: {
+    signIn: "/login",
+    signOut: "/logout",
+  },
   adapter: PrismaAdapter(db),
   providers: [
     // DiscordProvider({
@@ -68,8 +73,32 @@ export const authOptions: NextAuthOptions = {
           placeholder: "*********",
         },
       },
-      async authorize(credentials) {
-        return null;
+      async authorize(credentials, _req) {
+        if (!credentials) {
+          throw new Error("Invalid credentials.");
+        }
+
+        const user = await db.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+
+        if (!user) {
+          throw new Error("The user with the same email does not exist.");
+        }
+
+        const isPasswordMatch = await isPasswordValid(
+          credentials.password,
+          // **  for now lets assuming everyone has password set up **
+          user.hashedPassword!,
+        );
+
+        if (!isPasswordMatch) {
+          throw new Error("Incorrect email or password.");
+        }
+
+        return { id: user.id, email: user.email };
       },
     }),
     GitHubProvider({

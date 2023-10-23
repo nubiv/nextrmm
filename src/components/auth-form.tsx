@@ -2,33 +2,64 @@
 
 import * as React from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import { cn } from "~/lib/utils";
 import { Icons } from "~/components/icons";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { AuthFormType } from "~/types/index.d";
+import { api } from "~/trpc/react";
+import { RouterInputs } from "~/trpc/shared";
+import { redirect } from "next/navigation";
 
-interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
+  authFormType: AuthFormType;
+}
 
-export function AuthForm({ className, ...props }: AuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const router = useRouter();
+type RegisterInput = RouterInputs["credentialsRouter"]["register"];
 
-  function onSubmit(event: React.SyntheticEvent) {
+export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const register = api.credentialsRouter.register.useMutation();
+
+  async function onRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/");
-    }, 2000);
+    // ** FormData does not read input values here, wired :( **
+    // const formData = new FormData(event.currentTarget);
+    // console.log("data>>>", Object.fromEntries(formData));
+
+    const registerInput: RegisterInput = {
+      email,
+      password,
+    };
+    setEmail("");
+    setPassword("");
+
+    register.mutate(registerInput, {
+      onSuccess() {
+        console.log("success>>>");
+        // ** redirect wouldn't work in this onSuccess callback **
+        // redirect("login");
+      },
+    });
   }
+
+  async function onSignIn(event: React.FormEvent<HTMLFormElement>) {}
+
+  React.useEffect(() => {
+    if (register.isSuccess) {
+      redirect("login");
+    }
+  }, [register]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={authFormType === AuthFormType.SignIn ? onSignIn : onRegister}
+      >
         <div className="grid gap-2">
           <div className="grid gap-2">
             <Label className="sr-only" htmlFor="email">
@@ -41,7 +72,9 @@ export function AuthForm({ className, ...props }: AuthFormProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading}
+              value={email}
+              disabled={register.isLoading}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Label className="sr-only" htmlFor="email">
               Password
@@ -53,14 +86,18 @@ export function AuthForm({ className, ...props }: AuthFormProps) {
               autoCapitalize="none"
               autoComplete=""
               autoCorrect="off"
-              disabled={isLoading}
+              value={password}
+              disabled={register.isLoading}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button disabled={isLoading}>
-            {isLoading && (
+          <Button disabled={register.isLoading}>
+            {register.isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Sign In with Email
+            {authFormType === AuthFormType.SignIn
+              ? "Sign In with Email"
+              : "Sign Up"}
           </Button>
         </div>
       </form>
@@ -78,10 +115,10 @@ export function AuthForm({ className, ...props }: AuthFormProps) {
         <Button
           variant="outline"
           type="button"
-          disabled={isLoading}
+          disabled={register.isLoading}
           onClick={() => signIn("google", { callbackUrl: "/" })}
         >
-          {isLoading ? (
+          {register.isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <Icons.google className="mr-2 h-4 w-4" />
@@ -91,10 +128,10 @@ export function AuthForm({ className, ...props }: AuthFormProps) {
         <Button
           variant="outline"
           type="button"
-          disabled={isLoading}
+          disabled={register.isLoading}
           onClick={() => signIn("github", { callbackUrl: "/" })}
         >
-          {isLoading ? (
+          {register.isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <Icons.gitHub className="mr-2 h-4 w-4" />
@@ -102,6 +139,7 @@ export function AuthForm({ className, ...props }: AuthFormProps) {
           GitHub
         </Button>
       </div>
+      <p>{register.error?.data ? register.error.message : null}</p>
     </div>
   );
 }

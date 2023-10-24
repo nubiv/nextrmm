@@ -7,11 +7,15 @@ import {
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import EmailProvider from "next-auth/providers/email";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 import { isPasswordValid } from "~/lib/hash";
+import { Resend } from "resend";
+import { EmailTemplate } from "~/components/email-template";
 
+const resend = new Resend("re_T3T2Nw76_LrnEcTmQxUC3oXfdAJ92WQmM");
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -101,12 +105,38 @@ export const authOptions: NextAuthOptions = {
         return { id: user.id, email: user.email };
       },
     }),
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
+      },
+      from: process.env.EMAIL_FROM,
+      sendVerificationRequest: async ({ identifier, url, provider }) => {
+        try {
+          const { host } = new URL(url);
+
+          await resend.emails.send({
+            from: provider.from,
+            to: identifier,
+            subject: `Sign in to ${host}.`,
+            text: `Sign in to ${host}\n${url}\n\n`,
+            react: EmailTemplate({ host, url }),
+          });
+        } catch (error) {
+          throw new Error(`Email could not be sent. ${error}`);
+        }
+      },
+    }),
     GitHubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
+      clientId: env.GITHUB_CLIENT_ID!,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     /**

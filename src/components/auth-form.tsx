@@ -11,7 +11,7 @@ import { Label } from "~/components/ui/label";
 import { AuthFormType } from "~/types/index.d";
 import { api } from "~/trpc/react";
 import { RouterInputs } from "~/trpc/shared";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   authFormType: AuthFormType;
@@ -19,12 +19,18 @@ interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 
 type RegisterInput = RouterInputs["credentialsRouter"]["register"];
 
+type FormData = {
+  email: string;
+  password: string;
+};
+
 export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
   const router = useRouter();
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [signInError, setSignInError] = React.useState<string>("");
   const register = api.credentialsRouter.register.useMutation();
+  const searchParams = useSearchParams();
 
   async function onRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -72,6 +78,23 @@ export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
     }
   }
 
+  async function onSignInWithEmail(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const signInResult = await signIn("email", {
+      email: email.toLowerCase(),
+      redirect: false,
+      callbackUrl: searchParams?.get("from") || "/",
+    });
+
+    if (!signInResult?.ok) {
+      console.log("Sign in failed.", signInResult?.error);
+      return;
+    }
+
+    console.log("Please check your email.");
+  }
+
   React.useEffect(() => {
     setInterval(() => {
       setSignInError("");
@@ -81,7 +104,9 @@ export function AuthForm({ className, authFormType, ...props }: AuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form
-        onSubmit={authFormType === AuthFormType.SignIn ? onSignIn : onRegister}
+        onSubmit={
+          authFormType === AuthFormType.SignIn ? onSignInWithEmail : onRegister
+        }
       >
         <div className="grid gap-2">
           <div className="grid gap-2">

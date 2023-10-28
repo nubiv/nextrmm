@@ -11,7 +11,9 @@
     "db:migrate:reset": "turbo run db:migrate:reset",
     "postinstall": "turbo run db:generate",
     "format": "turbo run format",
+    "format:fix": "turbo run format:fix",
     "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "start": "turbo run start --parallel",
     "clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo && rm -rf .next",
     "pre-commit": "lint-staged"

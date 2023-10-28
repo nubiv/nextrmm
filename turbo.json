@@ -45,7 +45,14 @@
     "format": {
       "outputs": []
     },
+    "format:fix": {
+      "outputs": []
+    },
     "lint": {
+      "dependsOn": ["^topo"],
+      "outputs": []
+    },
+    "lint:fix": {
       "dependsOn": ["^topo"],
       "outputs": []
     },

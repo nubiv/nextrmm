@@ -23,12 +23,12 @@ export default function RegisterPage() {
               <h1 className="text-2xl font-semibold tracking-tight">
                 Create a new account
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Enter your email below to create your account
               </p>
             </div>
             <AuthForm authFormType={AuthFormType.Register} />
-            <p className="px-8 text-center text-sm text-muted-foreground">
+            <p className="text-muted-foreground px-8 text-center text-sm">
               By clicking continue, you agree to our{" "}
               <Link
                 href="/terms"

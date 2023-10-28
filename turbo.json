@@ -7,7 +7,21 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "DATABASE_URL",
+        "NEXT_AUTH_SECRET",
+        "NEXT_AUTH_URL",
+        "GITHUB_CLIENT_ID",
+        "GITHUB_CLIENT_SECRET",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "EMAIL_SERVER_HOST",
+        "EMAIL_SERVER_PORT",
+        "EMAIL_SERVER_USER",
+        "EMAIL_SERVER_PASSWORD",
+        "EMAIL_FROM"
+      ]
     },
     "db:generate": {
       "inputs": ["prisma/schema.prisma"],
@@ -17,35 +31,31 @@
       "inputs": ["prisma/schema.prisma"],
       "cache": false
     },
+    "db:studio": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": false
+    },
+    "db:migrate:reset": {
+      "outputs": []
+    },
     "dev": {
       "persistent": true,
       "cache": false
     },
     "format": {
-      "outputs": ["node_modules/.cache/.prettiercache"],
-      "outputMode": "new-only"
+      "outputs": []
     },
     "lint": {
       "dependsOn": ["^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"]
+      "outputs": []
     },
     "typecheck": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
+    },
+    "clean": {
+      "outputs": []
     }
   },
-  "globalEnv": [
-    "DATABASE_URL",
-    "NEXT_AUTH_SECRET",
-    "NEXT_AUTH_URL",
-    "GITHUB_CLIENT_ID",
-    "GITHUB_CLIENT_SECRET",
-    "GOOGLE_CLIENT_ID",
-    "GOOGLE_CLIENT_SECRET",
-    "EMAIL_SERVER_HOST",
-    "EMAIL_SERVER_PORT",
-    "EMAIL_SERVER_USER",
-    "EMAIL_SERVER_PASSWORD",
-    "EMAIL_FROM"
-  ]
+  "globalEnv": []
 }

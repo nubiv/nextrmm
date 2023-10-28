@@ -13,6 +13,11 @@ jobs:
     uses: ./.github/workflows/prettier.yml
     secrets: inherit
 
+  typecheck:
+    name: Run TypeScript
+    uses: ./.github/workflows/typecheck.yml
+    secrets: inherit
+
   lint:
     name: Run Eslint
     uses: ./.github/workflows/lint.yml
@@ -24,7 +29,7 @@ jobs:
     secrets: inherit
 
   required:
-    needs: [format, lint, build]
+    needs: [format, typecheck, lint, build]
     if: always()
     runs-on: ubuntu-latest
     steps:

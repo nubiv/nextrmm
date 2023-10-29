@@ -28,5 +28,17 @@
   "ct3aMetadata": {
     "initVersion": "7.22.0"
   },
+  "lint-staged": {
+    "(apps|packages)/**/*.{ts,tsx,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.json": [
+      "prettier --write"
+    ],
+    "prisma/schema.prisma": [
+      "prisma format"
+    ]
+  },
   "packageManager": "pnpm@8.8.0"
 }

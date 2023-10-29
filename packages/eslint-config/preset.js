@@ -6,7 +6,7 @@ module.exports = {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
     "tailwindcss/no-custom-classname": "off",
-    "tailwindcss/classnames-order": "error",
+    // "tailwindcss/classnames-order": "error",
   },
   overrides: [
     {
@@ -14,4 +14,4 @@ module.exports = {
       parser: "@typescript-eslint/parser",
     },
   ],
-}
+};

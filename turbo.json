@@ -9,6 +9,9 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
+        "NODE_ENV",
+        "VERCEL_URL",
+        "PORT",
         "DATABASE_URL",
         "NEXT_AUTH_SECRET",
         "NEXT_AUTH_URL",

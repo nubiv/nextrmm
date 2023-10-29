@@ -20,6 +20,7 @@
     "pre-commit": "lint-staged"
   },
   "devDependencies": {
+    "@nextrmm/eslint-config": "workspace:*",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "turbo": "^1.10.16"

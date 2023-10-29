@@ -1,0 +1,5 @@
+{
+  "extends": "@nextrmm/tsconfig/react.json",
+  "include": ["."],
+  "exclude": ["build", "node_modules"]
+}

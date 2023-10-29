@@ -68,6 +68,9 @@ importers:
       nodemailer:
         specifier: ^6.9.7
         version: 6.9.7
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
       react-hook-form:
         specifier: ^7.47.0
         version: 7.47.0(react@18.2.0)
@@ -87,18 +90,9 @@ importers:
       '@nextrmm/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      '@types/eslint':
-        specifier: ^8.44.2
-        version: 8.44.2
-      '@types/node':
-        specifier: ^18.16.0
-        version: 18.16.0
-      '@types/react':
-        specifier: ^18.2.20
-        version: 18.2.20
-      '@types/react-dom':
-        specifier: ^18.2.7
-        version: 18.2.7
+      '@nextrmm/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.3.0
         version: 6.3.0(@typescript-eslint/parser@6.3.0)(eslint@8.47.0)(typescript@5.1.6)
@@ -144,6 +138,24 @@ importers:
       eslint-plugin-tailwindcss:
         specifier: ^3.13.0
         version: 3.13.0(tailwindcss@3.3.3)
+
+  packages/tsconfig:
+    devDependencies:
+      '@types/eslint':
+        specifier: ^8.44.2
+        version: 8.44.2
+      '@types/node':
+        specifier: ^18.16.0
+        version: 18.16.0
+      '@types/react':
+        specifier: ^18.2.20
+        version: 18.2.20
+      '@types/react-dom':
+        specifier: ^18.2.7
+        version: 18.2.7
+      typescript:
+        specifier: ^5.1.6
+        version: 5.1.6
 
   packages/ui:
     dependencies:
@@ -262,6 +274,9 @@ importers:
       '@nextrmm/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@nextrmm/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^18.16.0
         version: 18.16.0

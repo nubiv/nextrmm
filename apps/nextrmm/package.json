@@ -9,8 +9,6 @@
     "db:studio": "prisma studio",
     "db:migrate:reset": "prisma migrate reset --force",
     "dev": "next dev",
-    "format": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --pretty --noEmit",
@@ -48,10 +46,7 @@
     "postcss": "^8.4.27",
     "prisma": "^5.4.2",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.1.6",
-    "prettier": "^3.0.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
-    "prettier-plugin-tailwindcss": "^0.5.1"
+    "typescript": "^5.1.6"
   },
   "ct3aMetadata": {
     "initVersion": "7.22.0"

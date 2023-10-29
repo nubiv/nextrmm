@@ -42,14 +42,6 @@
       "persistent": true,
       "cache": false
     },
-    "format": {
-      "dependsOn": ["^topo"],
-      "cache": false
-    },
-    "format:fix": {
-      "dependsOn": ["^topo"],
-      "cache": false
-    },
     "lint": {
       "dependsOn": ["^topo"],
       "cache": false

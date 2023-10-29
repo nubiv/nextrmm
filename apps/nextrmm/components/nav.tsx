@@ -3,17 +3,17 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Icons } from "~/components/icons";
-import { CollapsibleContent } from "~/components/ui/collapsible";
 import {
+  cn,
+  CollapsibleContent,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
-import { Separator } from "~/components/ui/separator";
+  Separator,
+} from "@nextrmm/ui";
+import { Icons } from "~/components/icons";
 import { controlboardConfig } from "~/config/control-board";
 import { siteConfig } from "~/config/site";
-import { cn } from "~/lib/utils";
 import { SideNavItem, SideNavPopoverItem } from "~/types";
 
 export function AsideShowNav() {

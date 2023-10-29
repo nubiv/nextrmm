@@ -1,10 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { Button, Collapsible, CollapsibleTrigger } from "@nextrmm/ui";
 import { Icons } from "~/components/icons";
 import { AsideHiddenNav, AsideShowNav } from "~/components/nav";
-import { Button } from "~/components/ui/button";
-import { Collapsible, CollapsibleTrigger } from "~/components/ui/collapsible";
 
 export function BodyLayout({ children }: { children: React.ReactNode }) {
   const [isSideNavOpen, setisSideNavOpen] = React.useState(false);

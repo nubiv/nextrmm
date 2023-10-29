@@ -5,6 +5,8 @@
 await import("./env.mjs");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  transpilePackages: ["@nextrmm/ui"],
+};
 
 export default config;

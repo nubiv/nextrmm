@@ -1,15 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { useTheme } from "next-themes";
-import { Icons } from "~/components/icons";
-import { Button } from "~/components/ui/button";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@nextrmm/ui";
+import { useTheme } from "next-themes";
+import { Icons } from "~/components/icons";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();

@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ["nextrmm/preset"],
+  extends: ["@nextrmm/eslint-config/preset"],
   settings: {
     tailwindcss: {
       callees: ["nextrmm"],

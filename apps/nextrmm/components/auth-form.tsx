@@ -3,14 +3,11 @@
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, cn, Input, Label } from "@nextrmm/ui";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Icons } from "~/components/icons";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { cn } from "~/lib/utils";
 import { authDataSchema } from "~/lib/validation/auth";
 import { AuthFormType } from "~/types/index.d";
 

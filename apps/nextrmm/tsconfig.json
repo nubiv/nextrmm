@@ -30,7 +30,8 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "types/*.d.ts"
+    "types/*.d.ts",
+    "../../packages/ui/src/lib/utils.ts"
   ],
   "exclude": ["node_modules"]
 }

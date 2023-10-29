@@ -12,19 +12,16 @@ export function BodyLayout({ children }: { children: React.ReactNode }) {
     <div
       className={`container grid min-h-screen flex-1 gap-3 ${
         isSideNavOpen ? "md:grid-cols-[50px_1fr]" : "md:grid-cols-[200px_1fr]"
-      } max-w-none px-0 transition-[width]`}
-    >
+      } max-w-none px-0 transition-[width]`}>
       <aside className="hidden md:flex">
         <Collapsible
           open={isSideNavOpen}
           onOpenChange={setisSideNavOpen}
-          className="fixed h-full "
-        >
+          className="fixed h-full ">
           <nav
             className={`flex h-full flex-col items-start gap-0.5 bg-[#fefefe] transition-[width] duration-300 ${
               isSideNavOpen ? "w-[50px]" : "w-[200px]"
-            }`}
-          >
+            }`}>
             {isSideNavOpen ? <AsideHiddenNav /> : <AsideShowNav />}
             <div className="flex h-full flex-col-reverse">
               <CollapsibleTrigger asChild>

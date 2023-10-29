@@ -10,8 +10,8 @@
     "db:studio": "turbo run db:studio",
     "db:migrate:reset": "turbo run db:migrate:reset",
     "postinstall": "turbo run db:generate",
-    "format": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --check \"**/*.{js,ts,jsx,tsx,md,json}\"",
+    "format:fix": "prettier --write \"**/*.{js,ts,jsx,tsx,md,json}\"",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "typecheck": "turbo run typecheck",
@@ -29,14 +29,14 @@
     "initVersion": "7.22.0"
   },
   "lint-staged": {
-    "(apps|packages)/**/*.{ts,tsx,md}": [
+    "(apps|packages)/**/*.{js,ts,jsx,tsx,md}": [
       "prettier --write",
       "eslint --fix"
     ],
     "*.json": [
       "prettier --write"
     ],
-    "prisma/schema.prisma": [
+    "apps/nextrmm/prisma/schema.prisma": [
       "prisma format"
     ]
   },

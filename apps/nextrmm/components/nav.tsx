@@ -27,8 +27,7 @@ export function AsideShowNav() {
     <div>
       <Link
         href="/"
-        className="mb-2 ml-8 mt-5 hidden items-center space-x-2 md:flex"
-      >
+        className="mb-2 ml-8 mt-5 hidden items-center space-x-2 md:flex">
         <Icons.logo />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
@@ -45,9 +44,8 @@ export function AsideShowNav() {
                   path === item.href
                     ? " border-violet-500 text-violet-500"
                     : "transparent",
-                  item.disabled && "cursor-not-allowed opacity-80",
-                )}
-              >
+                  item.disabled && "cursor-not-allowed opacity-80"
+                )}>
                 <Icon className="mr-2 h-4 w-4 opacity-50" />
                 <span>{item.title}</span>
               </span>
@@ -64,9 +62,8 @@ export function AsideShowNav() {
             <PopoverTrigger className="w-full">
               <span
                 className={cn(
-                  "group flex items-center border-l-4 border-transparent px-4 py-2 text-sm font-semibold hover:bg-accent",
-                )}
-              >
+                  "group flex items-center border-l-4 border-transparent px-4 py-2 text-sm font-semibold hover:bg-accent"
+                )}>
                 <Icon className="mr-2 h-4 w-4 opacity-50" />
                 <span>{item.title}</span>
               </span>
@@ -105,9 +102,8 @@ export function AsideHiddenNav() {
                     path === item.href
                       ? " border-violet-500 text-violet-500"
                       : " ",
-                    item.disabled && "cursor-not-allowed opacity-80",
-                  )}
-                >
+                    item.disabled && "cursor-not-allowed opacity-80"
+                  )}>
                   <Icon className="mr-2 h-4 w-4 opacity-50" />
                 </span>
               </Link>
@@ -123,9 +119,8 @@ export function AsideHiddenNav() {
               <PopoverTrigger className="w-full">
                 <span
                   className={cn(
-                    "group my-0.5 flex items-center border-l-4 border-transparent px-4 py-2 hover:bg-accent",
-                  )}
-                >
+                    "group my-0.5 flex items-center border-l-4 border-transparent px-4 py-2 hover:bg-accent"
+                  )}>
                   <Icon className="mr-2 h-4 w-4 opacity-50" />
                 </span>
               </PopoverTrigger>

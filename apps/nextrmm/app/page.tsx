@@ -16,8 +16,7 @@ export default async function Home() {
           <Link
             className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
             href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
+            target="_blank">
             <h3 className="text-2xl font-bold">First Steps →</h3>
             <div className="text-lg">
               Just the basics - Everything you need to know to set up your
@@ -27,8 +26,7 @@ export default async function Home() {
           <Link
             className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
             href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
+            target="_blank">
             <h3 className="text-2xl font-bold">Documentation →</h3>
             <div className="text-lg">
               Learn more about Create T3 App, the libraries it uses, and how to
@@ -48,15 +46,13 @@ export default async function Home() {
             {session ? (
               <Link
                 href="/api/auth/signout"
-                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-              >
+                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
                 Sign Out
               </Link>
             ) : (
               <Link
                 href="/login"
-                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-              >
+                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
                 Sign in
               </Link>
             )}

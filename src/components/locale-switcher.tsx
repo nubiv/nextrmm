@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { redirect, usePathname } from "next/navigation";
+import { redirect, RedirectType, usePathname } from "next/navigation";
+import { setCookie } from "cookies-next";
 import {
   Select,
   SelectContent,
@@ -18,25 +19,30 @@ export function LocaleSwitcher() {
   const pathName = usePathname();
   const [currentLocale, setCurrentLocale] = React.useState<string>("");
 
-  const redirectedPathName = (locale: string) => {
-    if (!pathName) return "/";
+  //   const redirectedPathName = (locale: string) => {
+  //     if (!pathName) return "/";
 
-    const segments = pathName.split("/");
-    segments[1] = locale;
-    return segments.join("/");
-  };
+  //     const segments = pathName.split("/");
+  //     segments[1] = locale;
+  //     return segments.join("/");
+  //   };
 
   const onSelect = (value: string) => {
-    const url = redirectedPathName(value);
+    // const url = redirectedPathName(value);
+    setCookie("NEXT_LOCALE", value);
+    setCurrentLocale(value);
 
-    redirect(url);
+    redirect(pathName, RedirectType.replace);
   };
 
-  React.useEffect(() => {
-    const segments = pathName.split("/");
-    if (!segments[1]) return;
-    setCurrentLocale(segments[1]);
-  }, [pathName]);
+  //   React.useEffect(() => {
+  //     const segments = pathName.split("/");
+  //     if (!segments[1]) return;
+  //     setCurrentLocale(segments[1]);
+  //   }, [pathName]);
+  //   React.useEffect(() => {
+  //     redirect(pathName);
+  //   }, [currentLocale]);
 
   return (
     <Select onValueChange={onSelect}>
